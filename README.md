@@ -31,6 +31,7 @@ The application allows users to:
 
 - Python 3.7 or higher
 - TMDB API key (for fetching movie posters)
+- Kaggle account (to download the dataset)
 
 ## 🔧 Installation
 
@@ -51,6 +52,19 @@ The application allows users to:
    pip install -r requirements.txt
    ```
 
+4. **Download and setup the dataset**
+   - Follow the instructions in the [Dataset section](#-dataset) below to download the TMDB dataset
+   - Run the preprocessing script to create the pickle files
+
+5. **Run the application**
+   ```bash
+   streamlit run app.py
+   ```
+
+6. **Open your browser**
+   pip install -r requirements.txt
+   ```
+
 4. **Run the application**
    ```bash
    streamlit run app.py
@@ -64,13 +78,19 @@ The application allows users to:
 
 ```
 movies-recomender-system/
-├── app.py                 # Main Streamlit application
-├── movie_dict.pkl         # Pickled movie dataset (2.1MB)
-├── similarity.pkl         # Pre-computed similarity matrix (176MB)
-├── requirements.txt       # Python dependencies
-├── .gitignore            # Git ignore file
-├── venv/                 # Virtual environment (ignored)
-└── README.md             # Project documentation
+├── app.py                              # Main Streamlit application
+├── movie_dict.pkl                      # Pickled movie dataset (2.1MB) - Generated
+├── similarity.pkl                      # Pre-computed similarity matrix (176MB) - Generated
+├── requirements.txt                    # Python dependencies
+├── .gitignore                         # Git ignore file
+├── movie-recommender-system-model/    # Model development directory
+│   ├── movie-recommender-system.ipynb # Jupyter notebook for data processing
+│   ├── tmdb_5000_movies.csv          # Dataset file (download from Kaggle)
+│   ├── tmdb_5000_credits.csv         # Dataset file (download from Kaggle)
+│   ├── movie_dict.pkl                 # Generated pickle files (copy to main dir)
+│   └── similarity.pkl                 # Generated pickle files (copy to main dir)
+├── venv/                              # Virtual environment (ignored)
+└── README.md                          # Project documentation
 ```
 
 ## 🎯 How It Works
@@ -84,7 +104,61 @@ movies-recomender-system/
    - Returns the top 5 most similar movies (excluding the selected movie itself)
 4. **Poster Fetching**: Uses TMDB API to fetch and display movie posters
 
-## 🔑 API Configuration
+## � Dataset
+
+This project uses the **TMDB Movie Metadata** dataset from Kaggle:
+- **Dataset URL**: [TMDB Movie Metadata](http://kaggle.com/datasets/tmdb/tmdb-movie-metadata)
+- **Description**: Contains metadata for movies including titles, genres, keywords, cast, crew, and more
+- **Files needed**: `tmdb_5000_movies.csv` and `tmdb_5000_credits.csv`
+
+### 🔧 Creating Pickle Files
+
+Since the pickle files (`movie_dict.pkl` and `similarity.pkl`) are not included in the repository (they're in `.gitignore`), you'll need to create them from the dataset:
+
+#### Prerequisites for Data Processing:
+```bash
+pip install pandas numpy scikit-learn jupyter
+```
+
+#### Step 1: Download the Dataset
+1. Go to [Kaggle TMDB Dataset](http://kaggle.com/datasets/tmdb/tmdb-movie-metadata)
+2. Download the dataset files:
+   - `tmdb_5000_movies.csv`
+   - `tmdb_5000_credits.csv`
+3. Place them in the `movie-recommender-system-model/` directory
+
+#### Step 2: Run the Jupyter Notebook
+1. Navigate to the model directory:
+   ```bash
+   cd movie-recommender-system-model
+   ```
+
+2. Start Jupyter Notebook:
+   ```bash
+   jupyter notebook
+   ```
+
+3. Open and run the `movie-recommender-system.ipynb` notebook
+   - Execute all cells in the notebook
+   - This will process the dataset and create the required pickle files
+
+#### Step 3: Copy Pickle Files
+After running the notebook, copy the generated pickle files to the main project directory:
+```bash
+cp movie_dict.pkl ../
+cp similarity.pkl ../
+```
+
+#### Step 4: Verify the Files
+Return to the main directory and verify the pickle files:
+```bash
+cd ..
+ls -lah *.pkl
+```
+
+**Note**: The notebook processing may take several minutes due to the similarity matrix calculation.
+
+## �🔑 API Configuration
 
 The application uses The Movie Database (TMDB) API for fetching movie posters. The API key is currently hardcoded in the application. For production use, consider:
 
@@ -98,32 +172,6 @@ The application uses The Movie Database (TMDB) API for fetching movie posters. T
 ```bash
 streamlit run app.py
 ```
-
-### Cloud Deployment
-- **Streamlit Cloud**: Direct deployment from GitHub
-- **Heroku**: With appropriate buildpacks
-- **Docker**: Containerized deployment
-- **AWS/GCP/Azure**: Cloud platform deployment
-
-**Note**: The `similarity.pkl` file (176MB) may exceed size limits on some free hosting platforms.
-
-## 📊 Dataset Information
-
-- **Movies Dataset**: Contains movie information including titles, genres, and other features
-- **Similarity Matrix**: Pre-computed using content-based features (likely genres, keywords, cast, etc.)
-- **Total Movies**: The exact number depends on the dataset used during preprocessing
-
-## 🔮 Future Enhancements
-
-- [ ] Add collaborative filtering for hybrid recommendations
-- [ ] Implement user rating system
-- [ ] Add movie search functionality
-- [ ] Include more detailed movie information (cast, director, plot)
-- [ ] Optimize similarity matrix storage for better performance
-- [ ] Add user authentication and personalized recommendations
-- [ ] Implement caching for better API performance
-- [ ] Add movie trailers integration
-- [ ] Create mobile-responsive design
 
 ## 🤝 Contributing
 
