@@ -2,22 +2,31 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 movies_dict = pickle.load(open("movie_dict.pkl", "rb"))
 movies = pd.DataFrame(movies_dict)
 similarity = pickle.load(open("similarity.pkl", "rb"))
+
+access_key = os.getenv("ACCESS_KEY")
 
 def fetch_poster(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?language=en-US"
 
     headers = {
         "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2I2NDk1NTkzMGM2NmZhNmU1ZjRjYjlmMzRmZjRlYyIsIm5iZiI6MTc1Mzg5NzI1MS4xOTgwMDAyLCJzdWIiOiI2ODhhNTkyM2ZhZTJkYjZmMmUwMWQ1ZTIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.bYVi9_iFOMg1YfmoDnXYcg32s8kyjY6kc0-oL2jfRXg"
+        "Authorization": f"Bearer {access_key}"
     }
+
+    # print(headers["Authorization"])
 
     response = requests.get(url, headers=headers)
     data = response.json()
-    print(data)
+    # print(data)
+    # print("***************\n**************")
     return "http://image.tmdb.org/t/p/w500" + data["poster_path"]
 
 def recommend(movie):

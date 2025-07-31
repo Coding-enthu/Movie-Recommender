@@ -7,3 +7,5 @@ venv/
 
 # CSV files
 *.csv
+
+.env
