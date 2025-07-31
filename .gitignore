@@ -2,8 +2,8 @@ venv/
 .ipynb_checkpoints/
 .dist/
 
-# Pickle files
-*.pkl
+# # Pickle files
+# *.pkl
 
 # CSV files
 *.csv
