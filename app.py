@@ -18,7 +18,7 @@ def fetch_poster(movie_id):
 
     headers = {
         "accept": "application/json",
-        "Authorization": f"Bearer {access_key}"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjY2I2NDk1NTkzMGM2NmZhNmU1ZjRjYjlmMzRmZjRlYyIsIm5iZiI6MTc1Mzg5NzI1MS4xOTgwMDAyLCJzdWIiOiI2ODhhNTkyM2ZhZTJkYjZmMmUwMWQ1ZTIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.bYVi9_iFOMg1YfmoDnXYcg32s8kyjY6kc0-oL2jfRXg"
     }
 
     # print(headers["Authorization"])
