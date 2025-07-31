@@ -2,6 +2,8 @@
 
 A content-based movie recommendation system built with Streamlit that suggests movies based on similarity scores using machine learning algorithms.
 
+[Deployed Link](https://movie-recommender-nkbx.onrender.com)
+
 ## 🌟 Features
 
 - **Content-Based Filtering**: Recommends movies based on movie features and similarity
